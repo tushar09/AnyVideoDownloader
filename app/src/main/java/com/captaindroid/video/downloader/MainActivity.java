@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.captaindroid.video.downloader.dto.VideoLink;
+import com.captaindroid.video.downloader.events.OnVideoFoundListener;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onVideo(ArrayList<VideoLink> videos) {
                     for (int i = 0; i < videos.size(); i++) {
-                        Log.e("size", videos.get(i).getQuality() + " adf " + videos.get(i).isHasAudio() + " " + videos.get(i).getUrl());
+                        Log.e("size", videos.get(i).isHasAudio() + " " + videos.get(i).getQuality() + " adf " + " " + videos.get(i).getUrl());
                     }
 
                 }

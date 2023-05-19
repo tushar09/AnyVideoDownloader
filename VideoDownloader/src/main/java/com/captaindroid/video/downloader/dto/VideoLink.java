@@ -1,4 +1,4 @@
-package com.captaindroid.video.downloader;
+package com.captaindroid.video.downloader.dto;
 
 public class VideoLink {
     private String url;

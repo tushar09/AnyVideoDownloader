@@ -1,5 +1,7 @@
 package com.captaindroid.video.downloader;
 
+import com.captaindroid.video.downloader.dto.VideoLink;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

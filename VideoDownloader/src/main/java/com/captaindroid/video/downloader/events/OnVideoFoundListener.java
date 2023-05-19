@@ -1,5 +1,7 @@
-package com.captaindroid.video.downloader;
+package com.captaindroid.video.downloader.events;
 
+
+import com.captaindroid.video.downloader.dto.VideoLink;
 
 import java.util.ArrayList;
 

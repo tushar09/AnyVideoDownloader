@@ -1,9 +1,7 @@
 package com.captaindroid.video.downloader;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -12,8 +10,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.appcompat.app.AlertDialog;
 
+import com.captaindroid.video.downloader.events.OnVideoFoundListener;
 
 import java.net.URI;
 import java.net.URISyntaxException;
