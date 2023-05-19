@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            VideoDownloader.getInstance().getResults(this, "https://www.youtube.com/shorts/AMGSeQSu5wA", new WebView(this), this, new OnVideoFoundListener() {
+            VideoDownloader.getInstance().getResults(this, "https://www.youtube.com/shorts/AMGSeQSu5wA", new OnVideoFoundListener() {
                 @Override
                 public void onVideo(ArrayList<VideoLink> videos) {
                     for (int i = 0; i < videos.size(); i++) {

@@ -3,6 +3,7 @@ package com.captaindroid.video.downloader;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -37,7 +38,8 @@ public class VideoDownloader {
         return INSTANCE;
     }
 
-    public ArrayList<String> getResults(Context context, String url, WebView wv, Activity activity, OnVideoFoundListener onVideoFoundListener) throws URISyntaxException {
+    public ArrayList<String> getResults(Context context, String url, OnVideoFoundListener onVideoFoundListener) throws URISyntaxException {
+        WebView wv = new WebView(context);
         URI uri = new URI(url);
         String domain = uri.getHost();
         domain = domain.startsWith("www.") ? domain.substring(4) : domain;
@@ -92,7 +94,7 @@ public class VideoDownloader {
                     @Override
                     public void run() {
                         while (stopLoop == false){
-                            activity.runOnUiThread(new Runnable() {
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
                                     wv.loadUrl("javascript:window.HtmlViewer.showHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
