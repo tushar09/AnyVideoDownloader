@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class Extractor {
     public ArrayList<VideoLink> extractData(String html){
         Document doc = Jsoup.parse(html);
-        //Elements main = doc.getElementsByClass("expand");
-        //Elements main = doc.select("a");
         String thumb = "";
         if(doc.getElementsByClass("thumb").first() != null){
             thumb = doc.getElementsByClass("thumb").first().attr("src");
@@ -27,15 +25,17 @@ public class Extractor {
                     || el.attr("data-type").toLowerCase().contains("webm")
                     || el.attr("data-type").toLowerCase().contains("vid")
             ){
-                VideoLink vl = new VideoLink();
-                vl.setUrl(el.attr("href"));
-                vl.setFormat(el.attr("data-type").toUpperCase());
-                vl.setQuality(el.attr("title").replaceAll("[^0-9]", "").trim());
-                if(vl.getQuality() == null || vl.getQuality().equals("")){
-                    vl.setQuality(el.attr("data-quality"));
+                String quality = el.attr("title").replaceAll("[^0-9]", "").trim();
+                if(quality == null || quality.equals("")){
+                    quality = el.attr("data-quality");
                 }
-                vl.setHasAudio(!el.attr("title").contains("without audio"));
-                vl.setThumbnail(thumb);
+                VideoLink vl = new VideoLink(el.attr("href"),
+                        quality,
+                        el.attr("data-type").toUpperCase(),
+                        thumb,
+                        !el.attr("title").contains("without audio")
+                );
+
                 links.add(vl);
             }
 
