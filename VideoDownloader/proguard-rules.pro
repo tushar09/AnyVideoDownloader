@@ -21,3 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 -keeppackagenames org.jsoup.nodes
+-keep class com.captaindroid.**{
+    *;
+}
