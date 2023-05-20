@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            VideoDownloader.getInstance().getResults(this, "https://www.youtube.com/shorts/AMGSeQSu5wA", new OnVideoFoundListener() {
+            VideoDownloader.getInstance().getResults(this, "https://www.youtube.com/watch?v=434EuVb1eNQ", new OnVideoFoundListener() {
                 @Override
                 public void onVideo(ArrayList<VideoLink> videos) {
                     for (int i = 0; i < videos.size(); i++) {
@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("size", error);
                 }
             });
-        } catch (URISyntaxException e) {
-            Log.e("size", e.getMessage());
+        } catch (Exception e) {
+            Log.e("size", e.toString());
         }
     }
 }

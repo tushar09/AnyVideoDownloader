@@ -14,8 +14,11 @@ import android.webkit.WebViewClient;
 
 import com.captaindroid.video.downloader.events.OnVideoFoundListener;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class VideoDownloader {
@@ -39,10 +42,8 @@ public class VideoDownloader {
     }
 
     public ArrayList<String> getResults(Context context, String url, OnVideoFoundListener onVideoFoundListener) throws URISyntaxException {
+
         WebView wv = new WebView(context);
-        URI uri = new URI(url);
-        String domain = uri.getHost();
-        domain = domain.startsWith("www.") ? domain.substring(4) : domain;
         this.url = url;
 
         WebSettings settings = wv.getSettings();
@@ -84,8 +85,6 @@ public class VideoDownloader {
                         Log.e("ht", url);
                         view.loadUrl("javascript:window.HtmlViewer.showHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
                         view.loadUrl("javascript:var uselessvar = document.getElementById('sf_url').value='" + url + "';");
-                        //view.loadUrl("javascript:var uselessvar = document.getElementById('sf_url').value='https://www.facebook.com/watch?v=449171080703999';");
-                        //view.loadUrl("javascript:var uselessvar = document.getElementById('sf_url').value='https://vimeo.com/channels/staffpicks/629606430';");
                         view.loadUrl("javascript:var uselessvar = document.getElementById('sf_submit').click();");
                     }
                 }, 4000);
@@ -116,8 +115,7 @@ public class VideoDownloader {
 
         });
 
-        //wv.loadUrl("https://www.youtube.com/watch?v=dAHqcEnPIXw");
-        wv.loadUrl("https://en.savefrom.net/");
+        wv.loadUrl("https://en.savefrom.net/390/");
 
         return null;
     }
@@ -142,6 +140,7 @@ public class VideoDownloader {
                     onVideoFoundListener.onVideo(extractor.extractData(html));
                 }catch (Exception e){
                     Log.e("ht", e.getMessage());
+                    onVideoFoundListener.onError("Something went wrong.");
                 }
 
             }else if(html.contains("data-hid")){
@@ -149,6 +148,12 @@ public class VideoDownloader {
                 stopLoop = true;
                 //no video
 
+            } else if (html.contains("result-failure")) {
+                if(stopLoop == false){
+                    stopLoop = true;
+                }else {
+                    onVideoFoundListener.onError("File not found. File has either been deleted, or you entered the wrong URL.");
+                }
             }
 
         }
