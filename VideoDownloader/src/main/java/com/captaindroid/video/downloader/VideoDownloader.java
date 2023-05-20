@@ -1,6 +1,5 @@
 package com.captaindroid.video.downloader;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,14 +10,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
 import com.captaindroid.video.downloader.events.OnVideoFoundListener;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class VideoDownloader {
@@ -27,7 +21,6 @@ public class VideoDownloader {
 
     private boolean stopLoop = false;
 
-    private String url;
 
     public static VideoDownloader getInstance(){
         if(INSTANCE == null) {
@@ -44,7 +37,6 @@ public class VideoDownloader {
     public ArrayList<String> getResults(Context context, String url, OnVideoFoundListener onVideoFoundListener) throws URISyntaxException {
 
         WebView wv = new WebView(context);
-        this.url = url;
 
         WebSettings settings = wv.getSettings();
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -58,10 +50,8 @@ public class VideoDownloader {
         settings.setUseWideViewPort(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
-        //settings.setAppCachePath(context.getCacheDir().getAbsolutePath() + "/webViewCache");
         settings.setGeolocationDatabasePath(context.getFilesDir().getPath());
         settings.setGeolocationEnabled(true);
-        //settings.setAppCacheEnabled(true);
         settings.setAllowContentAccess(true);
         settings.setLoadsImagesAutomatically(true);
         settings.setAllowFileAccess(true);
@@ -93,12 +83,12 @@ public class VideoDownloader {
                     @Override
                     public void run() {
                         while (stopLoop == false){
-                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     wv.loadUrl("javascript:window.HtmlViewer.showHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
                                 }
-                            });
+                            }, 4000);
                             try {
                                 Thread.sleep(4000);
                             } catch (InterruptedException e) {
@@ -107,8 +97,6 @@ public class VideoDownloader {
                         }
                     }
                 }).start();
-
-
 
             }
 
@@ -139,21 +127,12 @@ public class VideoDownloader {
                 try{
                     onVideoFoundListener.onVideo(extractor.extractData(html));
                 }catch (Exception e){
-                    Log.e("ht", e.getMessage());
                     onVideoFoundListener.onError("Something went wrong.");
                 }
 
             }else if(html.contains("data-hid")){
-
                 stopLoop = true;
-                //no video
-
-            } else if (html.contains("result-failure")) {
-                if(stopLoop == false){
-                    stopLoop = true;
-                }else {
-                    onVideoFoundListener.onError("File not found. File has either been deleted, or you entered the wrong URL.");
-                }
+                onVideoFoundListener.onError("File not found. File has either been deleted, or you entered the wrong URL.");
             }
 
         }
