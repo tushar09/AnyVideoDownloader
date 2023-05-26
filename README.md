@@ -1,7 +1,7 @@
 
 # Any Video Downloader
 
-A library for android which can download any video from internet specially from any tube including all availabe quality like 240P, 360P, 480P, 720P 1080P and so on. It uses jsoup and webview behuind the sceen. This library also comes with pre-defined proguard rules.
+**Any Video Downloader** is a library for android which can download any video from internet specially from any tube including all availabe quality like 240P, 360P, 480P, 720P 1080P and so on. It uses **Jsoup** and **webview** behind the scene. This library also comes with pre-defined proguard rules.
 ## Installation
 
 Add it in your root build.gradle at the end of repositories:
