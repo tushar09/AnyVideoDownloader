@@ -7,12 +7,12 @@ A library for android which can download any video from internet specially from 
 Add it in your root build.gradle at the end of repositories:
 
 ```bash
-  allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 Add the dependency:
 
