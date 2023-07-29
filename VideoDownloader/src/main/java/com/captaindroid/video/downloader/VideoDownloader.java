@@ -127,7 +127,7 @@ public class VideoDownloader {
                 try{
                     onVideoFoundListener.onVideo(extractor.extractData(html));
                 }catch (Exception e){
-                    onVideoFoundListener.onError("Something went wrong.");
+                    onVideoFoundListener.onError(e.getMessage());
                 }
 
             }else if(html.contains("data-hid")){
